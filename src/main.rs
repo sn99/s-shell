@@ -5,9 +5,12 @@ use std::process::{Child, Command, Stdio};
 
 fn main() {
     loop {
-        print!("> ");
+
+        let current_dir = env::current_dir().unwrap();
+
+        print!("{} > ", current_dir.display());
         if let Err(e) = stdout().flush(){
-            println!("Error encountered : {}", e);
+            eprintln!("Error encountered : {}", e);
         }
 
         let mut input = String::new();
@@ -64,7 +67,7 @@ fn main() {
 
         if let Some(mut final_command) = previous_command {
             if let Err(e) = final_command.wait(){
-                println!("Error encountered : {}", e);
+                eprintln!("Error encountered : {}", e);
             }
         }
     }
