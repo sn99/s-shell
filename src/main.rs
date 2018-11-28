@@ -6,7 +6,9 @@ use std::process::{Child, Command, Stdio};
 fn main() {
     loop {
         print!("> ");
-        stdout().flush();
+        if let Err(e) = stdout().flush(){
+            println!("Error encountered : {}", e);
+        }
 
         let mut input = String::new();
         stdin().read_line(&mut input).unwrap();
@@ -61,7 +63,9 @@ fn main() {
         }
 
         if let Some(mut final_command) = previous_command {
-            final_command.wait();
+            if let Err(e) = final_command.wait(){
+                println!("Error encountered : {}", e);
+            }
         }
     }
 }
