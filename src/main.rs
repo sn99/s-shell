@@ -3,13 +3,24 @@ use std::io::{stdin, stdout, Write};
 use std::path::Path;
 use std::process::{Child, Command, Stdio};
 
+const GREEN: &str = "\x1b[32m";
+/*
+const RED: &str = "\x1b[31m";
+const ANSI_COLOR_YELLOW: &str = "\x1b[33m";
+const ANSI_COLOR_BLUE: &str = "\x1b[34m";
+const ANSI_COLOR_MAGENTA: &str = "\x1b[35m";
+const ANSI_COLOR_CYAN: &str = "\x1b[36m";
+const ANSI_BOLD: &str = "\x1b[1m";
+*/
+
+const RESET: &str = "\x1b[0m";
+
 fn main() {
     loop {
-
         let current_dir = env::current_dir().unwrap();
 
-        print!("{} > ", current_dir.display());
-        if let Err(e) = stdout().flush(){
+        print!("{}{} > {}",GREEN, current_dir.display(), RESET);
+        if let Err(e) = stdout().flush() {
             eprintln!("Error encountered : {}", e);
         }
 
@@ -66,7 +77,7 @@ fn main() {
         }
 
         if let Some(mut final_command) = previous_command {
-            if let Err(e) = final_command.wait(){
+            if let Err(e) = final_command.wait() {
                 eprintln!("Error encountered : {}", e);
             }
         }
